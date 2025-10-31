@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import authRouter from './routes/auth.routes.js';
 import messageRouter from './routes/message.routes.js';
+import path from 'path';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,6 +20,15 @@ app.use('/api/messages', messageRouter);
 app.get('/healthcheck', (req, res) => {
   res.send('Welcome to the Ping Server API');
 });
+
+const __dirname = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "./client/dist")));
+
+  app.get("*", (_, res) => {
+    res.sendFile(path.join(__dirname, "./client", "dist", "index.html"));
+  });
+}
 
 
 app.listen(PORT, () => {
