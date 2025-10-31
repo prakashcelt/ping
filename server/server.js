@@ -5,6 +5,7 @@ import cors from 'cors';
 import authRouter from './routes/auth.routes.js';
 import messageRouter from './routes/message.routes.js';
 import path from 'path';
+import { connectDB } from './utils/db.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await connectDB(process.env.MONGO_URI);
   console.log(`Server is running on http://localhost:${PORT}`);
 });
