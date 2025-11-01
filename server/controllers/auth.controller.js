@@ -93,3 +93,8 @@ export const logout = (req, res) => {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "strict", secure: process.env.NODE_ENV !== "development" });
     res.status(200).json({ message: "Logged out successfully" });
 }   
+
+export const updateProfile = async (req, res) => {
+    // const { fullName, profilePic } = req.body;
+    res.json({ message: "Profile updated successfully" });
+};
